@@ -19,10 +19,10 @@ app.get("/", function (req, res) {
 
 app.use("/products", productsRouter);
 
-const razorpay = new Razorpay({
-  key_id: process.env.KEY_ID,
-  key_secret: process.env.KEY_SECRET,
-});
+// const razorpay = new Razorpay({
+//   key_id: process.env.KEY_ID,
+//   key_secret: process.env.KEY_SECRET,
+// });
 
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT;
