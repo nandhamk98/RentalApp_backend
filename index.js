@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import Razorpay from "razorpay";
 import { productsRouter } from "./Routes/productRouter.js";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
