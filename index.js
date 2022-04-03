@@ -35,30 +35,30 @@ app.get("/", (req, res) => {
   res.send("home page");
 });
 
-app.post("/razorpay", async (req, res) => {
-  const payment_capture = 1;
-  const { amount } = req.body;
-  const currency = "INR";
+// app.post("/razorpay", async (req, res) => {
+//   const payment_capture = 1;
+//   const { amount } = req.body;
+//   const currency = "INR";
 
-  const options = {
-    amount: amount * 100,
-    currency,
-    receipt: "qwsaq1",
-    payment_capture,
-  };
+//   const options = {
+//     amount: amount * 100,
+//     currency,
+//     receipt: "qwsaq1",
+//     payment_capture,
+//   };
 
-  try {
-    const response = await razorpay.orders.create(options);
-    console.log(response);
-    res.json({
-      id: response.id,
-      currency: response.currency,
-      amount: response.amount,
-    });
-  } catch (error) {
-    console.log(error);
-  }
-});
+//   try {
+//     const response = await razorpay.orders.create(options);
+//     console.log(response);
+//     res.json({
+//       id: response.id,
+//       currency: response.currency,
+//       amount: response.amount,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 // app.post("/signup", async (req, res) => {
 //   const { username, password } = req.body;
