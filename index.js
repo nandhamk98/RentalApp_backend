@@ -12,6 +12,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+app.get("/", function (req, res) {
+  res.send("Hello World");
+});
+
 app.use("/products", productsRouter);
 
 const razorpay = new Razorpay({
@@ -30,10 +35,6 @@ const createConnection = async () => {
 };
 
 export const client = await createConnection();
-
-app.get("/", (req, res) => {
-  res.send("home page");
-});
 
 // app.post("/razorpay", async (req, res) => {
 //   const payment_capture = 1;
