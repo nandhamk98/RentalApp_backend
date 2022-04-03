@@ -2,7 +2,7 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import cors from "cors";
 import dotenv from "dotenv";
-import { Razorpay } from "Razorpay";
+import Razorpay from "razorpay";
 import { productsRouter } from "./Routes/productRouter.js";
 // import bcrypt from "bcrypt";
 
