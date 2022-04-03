@@ -2,7 +2,7 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import cors from "cors";
 import dotenv from "dotenv";
-import Razorpay from "Razorpay";
+import { Razorpay } from "Razorpay";
 import { productsRouter } from "./Routes/productRouter.js";
 // import bcrypt from "bcrypt";
 
@@ -19,10 +19,10 @@ app.get("/", function (req, res) {
 
 app.use("/products", productsRouter);
 
-// const razorpay = new Razorpay({
-//   key_id: process.env.KEY_ID,
-//   key_secret: process.env.KEY_SECRET,
-// });
+const razorpay = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
+});
 
 const MONGO_URL = process.env.MONGO_URL;
 const PORT = process.env.PORT;
