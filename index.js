@@ -28,8 +28,8 @@ app.use("/products", productsRouter);
 // app.use(auth());
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_30sii7OAmoxSM0",
-  key_secret: "L9js2X9YAztAhcU7ytNsc7Sn",
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
 });
 
 const MONGO_URL = process.env.MONGO_URL;
