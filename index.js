@@ -85,14 +85,10 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  // console.log(hashedPassword);
-
   const data = await client
     .db("rental_app")
     .collection("users")
     .findOne({ username: username });
-
-  // console.log(data);
 
   if (!data) {
     res.send({ message: "invalid Credentails" });
@@ -105,7 +101,6 @@ app.post("/login", async (req, res) => {
       res.send({ message: "incorrect password" });
     }
   }
-  res.send({ message: "successfully created" });
 });
 
 const getHashedPassword = async (password) => {
