@@ -1,5 +1,6 @@
 import express from "express";
 import { client } from "../index.js";
+import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
@@ -48,6 +49,30 @@ router.get("/:id", async (req, res) => {
     .db("rental_app")
     .collection("products")
     .findOne({ _id: id });
+  res.send(data);
+});
+
+router.delete("/:id", async (req, res) => {
+  let { id } = req.params;
+  let objId = ObjectId(id);
+  let data = await client
+    .db("rental_app")
+    .collection("products")
+    .deleteOne({ _id: objId });
+
+  res.send(data);
+});
+
+router.put("/:id", async (req, res) => {
+  let { id } = req.params;
+  console.log(id);
+  let reqData = req.body;
+  let objId = ObjectId(id);
+  let data = await client
+    .db("rental_app")
+    .collection("products")
+    .updateOne({ _id: objId }, { $set: reqData });
+
   res.send(data);
 });
 

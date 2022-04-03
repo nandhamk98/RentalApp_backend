@@ -123,30 +123,35 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = getHashedPassword(password);
+  const hashedPassword = await getHashedPassword(password);
+
+  // console.log(hashedPassword);
 
   const data = await client
     .db("rental_app")
     .collection("users")
     .findOne({ username: username });
 
+  // console.log(data);
+
   if (!data) {
     res.send({ message: "invalid Credentails" });
   } else {
-    const isCorrect = bcrypt.compare(password, hashedPassword);
+    const isCorrect = await bcrypt.compare(password, hashedPassword);
+    console.log(isCorrect);
     if (isCorrect) {
       res.send({ message: "logged in successful" });
     } else {
       res.send({ message: "incorrect password" });
     }
   }
-
   res.send({ message: "successfully created" });
 });
 
 const getHashedPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
+  console.log("q2w2e ", hashedPassword);
   return hashedPassword;
 };
 
