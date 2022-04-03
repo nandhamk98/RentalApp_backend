@@ -4,8 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import Razorpay from "Razorpay";
 import { productsRouter } from "./Routes/productRouter.js";
-import bcrypt from "bcrypt";
-// import jwt from "jsonwebtoken";
+// import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -14,18 +13,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/products", productsRouter);
-
-// const auth = (req, res, next) => {
-//   try {
-//     const token = request.header("x-auth-token");
-//     jwt.verify(token, process.env.SECRET_KEY);
-//     next();
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
-// app.use(auth());
 
 const razorpay = new Razorpay({
   key_id: process.env.KEY_ID,
@@ -47,33 +34,6 @@ export const client = await createConnection();
 app.get("/", (req, res) => {
   res.send("home page");
 });
-
-// app.post("/verification", (req, res) => {
-//   // do a validation
-//   const secret = "12345678";
-
-//   console.log(req.body);
-
-//   const crypto = require("crypto");
-
-//   const shasum = crypto.createHmac("sha256", secret);
-//   shasum.update(JSON.stringify(req.body));
-//   const digest = shasum.digest("hex");
-
-//   console.log(digest, req.headers["x-razorpay-signature"]);
-
-//   if (digest === req.headers["x-razorpay-signature"]) {
-//     console.log("request is legit");
-//     // process it
-//     require("fs").writeFileSync(
-//       "payment1.json",
-//       JSON.stringify(req.body, null, 4)
-//     );
-//   } else {
-//     // pass it
-//   }
-//   res.json({ status: "ok" });
-// });
 
 app.post("/razorpay", async (req, res) => {
   const payment_capture = 1;
@@ -100,60 +60,60 @@ app.post("/razorpay", async (req, res) => {
   }
 });
 
-app.post("/signup", async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await getHashedPassword(password);
+// app.post("/signup", async (req, res) => {
+//   const { username, password } = req.body;
+//   const hashedPassword = await getHashedPassword(password);
 
-  const data = await client
-    .db("rental_app")
-    .collection("users")
-    .findOne({ username: username });
+//   const data = await client
+//     .db("rental_app")
+//     .collection("users")
+//     .findOne({ username: username });
 
-  if (!data) {
-    const createUser = await client
-      .db("rental_app")
-      .collection("users")
-      .insertOne({ username: username, password: hashedPassword });
+//   if (!data) {
+//     const createUser = await client
+//       .db("rental_app")
+//       .collection("users")
+//       .insertOne({ username: username, password: hashedPassword });
 
-    res.send({ message: "successfully created" });
-  } else {
-    res.send({ message: "username exists" });
-  }
-});
+//     res.send({ message: "successfully created" });
+//   } else {
+//     res.send({ message: "username exists" });
+//   }
+// });
 
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await getHashedPassword(password);
+// app.post("/login", async (req, res) => {
+//   const { username, password } = req.body;
+//   const hashedPassword = await getHashedPassword(password);
 
-  // console.log(hashedPassword);
+//   // console.log(hashedPassword);
 
-  const data = await client
-    .db("rental_app")
-    .collection("users")
-    .findOne({ username: username });
+//   const data = await client
+//     .db("rental_app")
+//     .collection("users")
+//     .findOne({ username: username });
 
-  // console.log(data);
+//   // console.log(data);
 
-  if (!data) {
-    res.send({ message: "invalid Credentails" });
-  } else {
-    const isCorrect = await bcrypt.compare(password, hashedPassword);
-    console.log(isCorrect);
-    if (isCorrect) {
-      res.send({ message: "logged in successful" });
-    } else {
-      res.send({ message: "incorrect password" });
-    }
-  }
-  res.send({ message: "successfully created" });
-});
+//   if (!data) {
+//     res.send({ message: "invalid Credentails" });
+//   } else {
+//     const isCorrect = await bcrypt.compare(password, hashedPassword);
+//     console.log(isCorrect);
+//     if (isCorrect) {
+//       res.send({ message: "logged in successful" });
+//     } else {
+//       res.send({ message: "incorrect password" });
+//     }
+//   }
+//   res.send({ message: "successfully created" });
+// });
 
-const getHashedPassword = async (password) => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-  console.log("q2w2e ", hashedPassword);
-  return hashedPassword;
-};
+// const getHashedPassword = async (password) => {
+//   const salt = await bcrypt.genSalt(10);
+//   const hashedPassword = await bcrypt.hash(password, salt);
+//   console.log("q2w2e ", hashedPassword);
+//   return hashedPassword;
+// };
 
 app.listen(PORT, () => {
   console.log(`The server started in ${PORT}`);
