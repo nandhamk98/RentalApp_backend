@@ -1,8 +1,10 @@
 import express from "express";
 import { client } from "../index.js";
 import { ObjectId } from "mongodb";
+import cors from "cors";
 
 const router = express.Router();
+router.use(cors());
 
 router.post("/", async (req, res) => {
   let reqData = req.body;

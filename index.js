@@ -84,7 +84,6 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await getHashedPassword(password);
 
   // console.log(hashedPassword);
 
@@ -98,7 +97,7 @@ app.post("/login", async (req, res) => {
   if (!data) {
     res.send({ message: "invalid Credentails" });
   } else {
-    const isCorrect = await bcrypt.compare(password, hashedPassword);
+    const isCorrect = await bcrypt.compare(password, data.password);
     console.log(isCorrect);
     if (isCorrect) {
       res.send({ message: "logged in successful" });
